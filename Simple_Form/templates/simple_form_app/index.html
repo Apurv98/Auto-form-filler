@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>SIMPLE FORM</title>
+    <link rel="stylesheet" href="{% static "mystyle.css" %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <h1>SIMPLE FORM SUBMITION</h1>
+      <div class="jumbotron">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          {% if wrong_captcha %}
+            <p class="text-danger">Wrong Captcha! Try Again!</p>
+          {% endif %}
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+        <br>
+          {% if count %}
+            <h3>{{count}} records inserted</h3>
+          {% endif %}
+      </div>
+      {% if form.captcha %}
+        <a href="{% url "index" %}">Go to form without Captcha</a>
+      {% else %}
+        <a href="{% url "captchaform" %}">Go to Form With Captcha</a>
+      {% endif %}
+    </div>
+  </body>
+</html>
